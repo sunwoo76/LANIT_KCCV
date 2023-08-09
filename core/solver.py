@@ -268,7 +268,8 @@ class Solver(nn.Module):
             optims.discriminator.step()
 
             """ Generator step1. Update Mapping net & Style encoder & Generator """
-            g_loss, g_losses_latent = compute_g_unsup_loss(nets, lpips_loss, args, clip_model, prompt, base_template, text_feat, base_text_feat, prompt_idx, x_real, y_org, y_trg, sim_ref = sim_ref, z_trgs=[z_trg, z_trg_2], device=self.device)
+            g_loss, g_losses_latent = compute_g_unsup_loss(nets, lpips_loss, args, clip_model, prompt, base_template, text_feat,
+                                                           base_text_feat, prompt_idx, x_real, y_org, y_trg, sim_ref = sim_ref, z_trgs=[z_trg, z_trg_2], device=self.device)
             
             self._reset_grad()
             g_loss.backward()
@@ -361,7 +362,7 @@ class Solver(nn.Module):
                     utils.debug_image(nets_ema, args, inputs_val_src, inputs_val_ref, y_val_src, y_val_ref, step=i+1)
 
     @torch.no_grad()
-    def sample(self, loaders):
+    def sample(self, loaders, sample_different=1):
         args = self.args
         nets_ema = self.nets_ema
         clip_model = self.clip_model
@@ -374,12 +375,19 @@ class Solver(nn.Module):
         os.makedirs(ospj(args.result_dir, args.name), exist_ok=True)
         self._load_checkpoint(args.resume_iter)
 
-        train_src = iter(loaders.src)
-        train_ref = iter(loaders.ref)
+        try:
+            for i in range(sample_different):
+                train_src = iter(loaders.src)
+                train_ref = iter(loaders.ref)
 
-        src,_ = next(train_src) 
-        ref,_, _ = next(train_ref) 
-
+                src,_ = next(train_src) 
+                ref,_, _ = next(train_ref)
+        except:
+            train_src = iter(loaders.src)
+            train_ref = iter(loaders.ref)
+            src,_ = next(train_src) 
+            ref,_, _ = next(train_ref)
+            
         sim_real, y_org, sim_ref, y_ref = get_unsup_labels(args, nets_ema, src.to(self.device), ref.to(self.device), clip_model, prompt, prompt_idx, self.base_template, text_feat, base_text_feat, self.device)
 
         if args.infer_mode == 'reference':

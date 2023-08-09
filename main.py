@@ -81,7 +81,7 @@ def main(args):
                                             batch_size=args.val_batch_size,
                                             shuffle=True,
                                             num_workers=args.num_workers))
-        solver.sample(loaders)
+        solver.sample(loaders, args.sample_different)
 
     elif args.mode == 'eval':
         solver.evaluate()
@@ -95,7 +95,9 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-
+    parser.add_argument('--sample_different', type=int, default=1,
+                    help='Image resolution')
+        
     # model arguments
     parser.add_argument('--img_size', type=int, default=256,
                         help='Image resolution')

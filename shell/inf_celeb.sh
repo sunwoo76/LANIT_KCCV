@@ -1,12 +1,11 @@
 python main.py \
-    --sample_different 1 \
     --name "" \
     --dataset celeb \
     --mode sample \
-    --train_img_dir ./imgs/celeb \
-    --val_img_dir ./imgs/celeb \
-    --src_dir ./imgs/celeb \
-    --ref_dir ./imgs/celeb \
+    --train_img_dir ./celebimgs \
+    --val_img_dir ./celebimgs \
+    --src_dir ./celebimgs \
+    --ref_dir ./celebimgs \
     --checkpoint_dir ./lanit_celeb_weight/celeb-10 \
     --step1 \
     --num_domains 10 \
@@ -21,5 +20,4 @@ python main.py \
     --base_fix \
     --val_batch_size 8 \
     --resume_iter 98000 \
-    --infer_mode latent \
-    --latent_num 0 3 9 \
+    --infer_mode reference \

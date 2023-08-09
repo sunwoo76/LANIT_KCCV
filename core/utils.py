@@ -36,6 +36,18 @@ def get_prompt_and_att(args):
         elif args.num_domains == 10:
             prompt = ['red car', 'orange car', 'gray car', 'blue car', 'truck', 'white car', 'sports car', 'van', 'sedan','compact car']
 
+    if 'anime' in args.dataset:
+        init_prompt = 'A photo of anime with {}.'
+        base_template = ["A photo of anime with."]
+        all_prompt = ['brown hair', 'red hair', 'black hair', 'purple hair', 'blond hair','blue hair', 'pink hair', 'silver hair', 'green hair', 'white hair']
+        
+        if args.num_domains == 4:
+            prompt = ['brown hair', 'red hair', 'black hair', 'purple hair',]
+        elif args.num_domains == 7:
+            prompt = ['brown hair', 'red hair', 'black hair', 'purple hair', 'blond hair','blue hair', 'pink hair',]
+        elif args.num_domains == 10:
+            prompt = ['brown hair', 'red hair', 'black hair', 'purple hair', 'blond hair','blue hair', 'pink hair', 'silver hair', 'green hair', 'white hair']
+            
     if 'metface' in args.dataset:
         init_prompt = 'a portrait with {}.'
         base_template = ["a portrait with."]

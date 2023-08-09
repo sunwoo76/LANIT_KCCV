@@ -1,12 +1,13 @@
 python main.py \
+    --sample_different 1 \
     --name "" \
     --dataset celeb \
     --mode sample \
-    --train_img_dir /media/data1/datasets/CelebAMask-HQ/celeba \
-    --val_img_dir /media/data1/datasets/CelebAMask-HQ/celeba \
-    --src_dir /media/data1/datasets/CelebAMask-HQ/celeba \
-    --ref_dir /media/data1/datasets/CelebAMask-HQ/celeba \
-    --checkpoint_dir ./expr/checkpoint/lanit_celeb_weight/celeb-10 \
+    --train_img_dir ./imgs/celeb \
+    --val_img_dir ./imgs/celeb \
+    --src_dir ./imgs/celeb \
+    --ref_dir ./imgs/celeb \
+    --checkpoint_dir ./lanit_celeb_weight/celeb-10 \
     --step1 \
     --num_domains 10 \
     --cycle \
