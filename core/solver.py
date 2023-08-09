@@ -375,11 +375,10 @@ class Solver(nn.Module):
         os.makedirs(ospj(args.result_dir, args.name), exist_ok=True)
         self._load_checkpoint(args.resume_iter)
 
+        train_src = iter(loaders.src)
+        train_ref = iter(loaders.ref)
         try:
             for i in range(sample_different):
-                train_src = iter(loaders.src)
-                train_ref = iter(loaders.ref)
-
                 src,_ = next(train_src) 
                 ref,_, _ = next(train_ref)
         except:
